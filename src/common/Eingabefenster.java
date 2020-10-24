@@ -33,7 +33,7 @@ public class Eingabefenster extends JPanel {
         useInfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parseDeckviewerInfosToModel(inputField.getText());
+                parser.parseDeckviewerInfosToModel(inputField.getText());
                 updateFieldsFromModel();
             }
         });
@@ -41,20 +41,8 @@ public class Eingabefenster extends JPanel {
 
         initialiseAndAddNameFields();
 
-        JLabel creatureInfoLabel = new JLabel("Kreaturentypen:");
-        this.creatureInfoField = new JTextField(20);
-        add(creatureInfoLabel);
-        add(creatureInfoField);
 
-        JLabel faeigTextLabel = new JLabel("Fähigkeiten-Text:");
-        this.faeigTxtField = new JTextField(15);
-        add(faeigTextLabel);
-        add(faeigTxtField);
-
-        JLabel statsLabel = new JLabel("Angriff/Verteidigung :");
-        this.statsField = new JTextField(4);
-        add(statsLabel);
-        add(statsField);
+        initialiseAndAddCreatureInfos();
 
         JLabel editionLabel = new JLabel("Edition:");
         editionChoice = new EditionChoice();
@@ -78,46 +66,98 @@ public class Eingabefenster extends JPanel {
 
     }
 
-    private void parseDeckviewerInfosToModel(String text) {
-    }
-
-    private void initialiseAndAddNameFields() {
-        JLabel nameDELabel = new JLabel("Name(DE):");
-        this.nameDEField = new JTextField(10);
-        add(nameDELabel);
-        add(nameDEField);
-
-        JLabel nameENLabel = new JLabel("Name(EN):");
-        this.nameENField = new JTextField(10);
-        add(nameENLabel);
-        add(nameENField);
-
-        JLabel nameFRLabel = new JLabel("Name(FR):");
-        this.nameFRField = new JTextField(10);
-        add(nameFRLabel);
-        add(nameFRField);
-
-        JLabel nameITLabel = new JLabel("Name(IT):");
-        this.nameITField = new JTextField(10);
-        add(nameITLabel);
-        add(nameITField);
-
-        JLabel nameSPLabel = new JLabel("Name(SP):");
-        this.nameSPField = new JTextField(10);
-        add(nameSPLabel);
-        add(nameSPField);
-
-        JLabel namePOLabel = new JLabel("Name(PO):");
-        this.namePOField = new JTextField(10);
-        add(namePOLabel);
-        add(namePOField);
-
+    private void initialiseAndAddCreatureInfos() {
         JLabel manaLabel = new JLabel("Manakosten:");
         this.manaField = new JTextField(5);
         add(manaLabel);
         add(manaField);
+
+        JLabel creatureInfoLabel = new JLabel("Kreaturentypen:");
+        this.creatureInfoField = new JTextField(20);
+        add(creatureInfoLabel);
+        add(creatureInfoField);
+
+        JLabel faeigTextLabel = new JLabel("Fähigkeiten-Text:");
+        this.faeigTxtField = new JTextField(15);
+        add(faeigTextLabel);
+        add(faeigTxtField);
+
+        JLabel statsLabel = new JLabel("Angriff/Verteidigung :");
+        this.statsField = new JTextField(4);
+        add(statsLabel);
+        add(statsField);
+
+
+    }
+
+    private void initialiseAndAddNameFields() {
+        JPanel namePanel = new JPanel();
+        namePanel.setPreferredSize(new Dimension(500, 250));
+
+        JLabel nameDELabel = new JLabel("Name(DE):");
+        this.nameDEField = new JTextField(10);
+        namePanel.add(nameDELabel);
+        namePanel.add(nameDEField);
+
+        JLabel nameENLabel = new JLabel("Name(EN):");
+        this.nameENField = new JTextField(10);
+        namePanel.add(nameENLabel);
+        namePanel.add(nameENField);
+
+        JLabel nameFRLabel = new JLabel("Name(FR):");
+        this.nameFRField = new JTextField(10);
+        namePanel.add(nameFRLabel);
+        namePanel.add(nameFRField);
+
+        JLabel nameITLabel = new JLabel("Name(IT):");
+        this.nameITField = new JTextField(10);
+        namePanel.add(nameITLabel);
+        namePanel.add(nameITField);
+
+        JLabel nameSPLabel = new JLabel("Name(SP):");
+        this.nameSPField = new JTextField(10);
+        namePanel.add(nameSPLabel);
+        namePanel.add(nameSPField);
+
+        JLabel namePOLabel = new JLabel("Name(PO):");
+        this.namePOField = new JTextField(10);
+        namePanel.add(namePOLabel);
+        namePanel.add(namePOField);
+        namePanel.revalidate();
+        add(namePanel);
     }
 
     private void updateFieldsFromModel() {
+        editionChoice.select(model.edition.ordinal());
+        rarityChoice.select(model.rarity.ordinal());
+        cardNumberField.setText(model.cardnumber);
+        faeigTxtField.setText(model.ability);
+        statsField.setText(model.stats);
+        namePOField.setText(model.namePO);
+        nameSPField.setText(model.nameSP);
+        nameITField.setText(model.nameIT);
+        nameFRField.setText(model.nameFR);
+        nameENField.setText(model.nameEN);
+        creatureInfoField.setText(model.cretureTypes);
+        manaField.setText(model.mana);
+        nameDEField.setText(model.nameDE);
+        artistField.setText(model.artist);
+    }
+
+    private void flushTextLabelsToModel(String text) {
+        model.edition = editionChoice.getEditionName();
+        model.rarity = rarityChoice.getRarity();
+        model.cardnumber =cardNumberField.getText();
+        model.ability = faeigTxtField.getText();
+        model.stats = statsField.getText();
+        model.namePO = namePOField.getText();
+        model.nameSP = nameSPField.getText();
+        model.nameIT = nameITField.getText();
+        model.nameFR = nameFRField.getText();
+        model.nameEN = nameENField.getText();
+        model.cretureTypes = creatureInfoField.getText();
+        model.mana = manaField.getText();
+        model.nameDE = nameDEField.getText();
+        model.artist = artistField.getText();
     }
 }
