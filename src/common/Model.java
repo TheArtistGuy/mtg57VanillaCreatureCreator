@@ -16,6 +16,8 @@ public class Model {
     public String mana;
     public String nameDE;
     public String artist;
+    public boolean hasAktivAbility;
+    public String abilityManaCost;
 
     public Model(){
 

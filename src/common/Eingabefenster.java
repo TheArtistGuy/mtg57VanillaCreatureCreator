@@ -22,13 +22,18 @@ public class Eingabefenster extends JPanel {
     private JTextField nameDEField;
     private Model model;
     private JTextField artistField;
+    private JCheckBox aktCheckBox;
+    private JTextField aktManaField;
+
 
     public Eingabefenster(Model model){
         this.model = model;
-        JLabel inputLabel1 = new JLabel("Informationen aus dem DeckViewer, um automatisch ");
-        JLabel inputLabel2 = new JLabel("in Felder zu schreiben die Elemente mit Komma trennen.");
+        JLabel inputLabel1 = new JLabel("Informationen aus dem Deckeditor, um automatisch in Felder zu schreiben ");
+        JLabel inputLabel2 = new JLabel("Fehler, wenn nicht alle Sprachen gesetzt sind.");
+        JLabel inputLabel3 = new JLabel("mit TABULATOR getrennte Zeichen zur ergänzung einfügen");
         this.add(inputLabel1);
         this.add(inputLabel2);
+        this.add(inputLabel3);
         JTextField inputField = new JTextField(40);
 
         this.add(inputField);
@@ -66,12 +71,21 @@ public class Eingabefenster extends JPanel {
         add(artistLabel);
         add(artistField);
 
+        JLabel aktLabel = new JLabel("Hat aktivierte Fähigkeit");
+        this.aktCheckBox = new JCheckBox();
+        add(aktLabel);
+        add(aktCheckBox);
+
+        JLabel aktManaLabel = new JLabel("Manakosten der aktivierten Fähigkeit");
+        this.aktManaField = new JTextField(5);
+        add(aktManaLabel);
+        this.add(aktManaField);
     }
-//Llanowarelfen	Llanowar Elves	Elfes de Llanowar	Llanowar Elves			Siebte	C	253	Jerry Tiritilli
+
     private void parseDeckviewerInfosToTextFields(String text) {
         //StringTokenizer tokenizer = new StringTokenizer(text, ",");
         StringTokenizer tokenizer = new StringTokenizer(text, "\t");
-        nameDEField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameDEField.setText(tokenizer.nextToken());
         if(tokenizer.hasMoreTokens()) nameENField.setText(tokenizer.nextToken());
         if(tokenizer.hasMoreTokens()) nameFRField.setText(tokenizer.nextToken());
         if(tokenizer.hasMoreTokens()) nameITField.setText(tokenizer.nextToken());
@@ -109,7 +123,7 @@ public class Eingabefenster extends JPanel {
         add(creatureInfoField);
 
         JLabel faeigTextLabel = new JLabel("Fähigkeiten-Text:");
-        this.faeigTxtField = new JTextField(15);
+        this.faeigTxtField = new JTextField(20);
         add(faeigTextLabel);
         add(faeigTxtField);
 
@@ -126,32 +140,32 @@ public class Eingabefenster extends JPanel {
         namePanel.setPreferredSize(new Dimension(500, 250));
 
         JLabel nameDELabel = new JLabel("Name(DE):");
-        this.nameDEField = new JTextField(10);
+        this.nameDEField = new JTextField(15);
         namePanel.add(nameDELabel);
         namePanel.add(nameDEField);
 
         JLabel nameENLabel = new JLabel("Name(EN):");
-        this.nameENField = new JTextField(10);
+        this.nameENField = new JTextField(15);
         namePanel.add(nameENLabel);
         namePanel.add(nameENField);
 
         JLabel nameFRLabel = new JLabel("Name(FR):");
-        this.nameFRField = new JTextField(10);
+        this.nameFRField = new JTextField(15);
         namePanel.add(nameFRLabel);
         namePanel.add(nameFRField);
 
         JLabel nameITLabel = new JLabel("Name(IT):");
-        this.nameITField = new JTextField(10);
+        this.nameITField = new JTextField(15);
         namePanel.add(nameITLabel);
         namePanel.add(nameITField);
 
         JLabel nameSPLabel = new JLabel("Name(SP):");
-        this.nameSPField = new JTextField(10);
+        this.nameSPField = new JTextField(15);
         namePanel.add(nameSPLabel);
         namePanel.add(nameSPField);
 
         JLabel namePOLabel = new JLabel("Name(PO):");
-        this.namePOField = new JTextField(10);
+        this.namePOField = new JTextField(15);
         namePanel.add(namePOLabel);
         namePanel.add(namePOField);
         namePanel.revalidate();
@@ -207,5 +221,7 @@ public class Eingabefenster extends JPanel {
         model.mana = manaField.getText();
         model.nameDE = nameDEField.getText();
         model.artist = artistField.getText();
+        model.hasAktivAbility = aktCheckBox.isSelected();
+        model.abilityManaCost = aktManaField.getText();
     }
 }
