@@ -23,7 +23,6 @@ public class TextAreaPanel extends JScrollPane {
     }
 
     public String createTextFromModel() {
-        System.out.println("createTextFromModel()");
         StringBuilder sb = new StringBuilder();
         sb.append("\t#region " + model.nameDE.trim() + "\n\n");
         sb.append("\t\tpublic class " + model.nameDE.trim() + "(TSpieler besitzer, GameManager.GameManager manager) :\n" );

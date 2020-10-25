@@ -18,19 +18,6 @@ public class Model {
     public String artist;
 
     public Model(){
-        this.edition = Editionen.RETURNTORAVNICA;
-        this.rarity = Rarity.COMMON;
-        this.cardnumber = new String();
-        this.ability = new String();
-        this.stats = new String();
-        this.namePO = new String();
-        this.nameSP = new String();
-        this.nameIT = new String();
-        this.nameFR = new String();
-        this.nameEN = new String();
-        this.nameDE = new String();
-        this.cretureTypes = new String();
-        this.mana = new String();
-        this.artist = new String();
+
     }
 }

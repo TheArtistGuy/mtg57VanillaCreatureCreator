@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.StringTokenizer;
 
 public class Eingabefenster extends JPanel {
     private EditionChoice editionChoice;
@@ -24,8 +25,10 @@ public class Eingabefenster extends JPanel {
 
     public Eingabefenster(Model model){
         this.model = model;
-        JLabel inputLabel = new JLabel("Informationen aus dem DeckViewer");
-        this.add(inputLabel);
+        JLabel inputLabel1 = new JLabel("Informationen aus dem DeckViewer, um automatisch ");
+        JLabel inputLabel2 = new JLabel("in Felder zu schreiben die Elemente mit Komma trennen.");
+        this.add(inputLabel1);
+        this.add(inputLabel2);
         JTextField inputField = new JTextField(40);
 
         this.add(inputField);
@@ -34,7 +37,6 @@ public class Eingabefenster extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 parseDeckviewerInfosToTextFields(inputField.getText());
-                updateFieldsFromModel();
             }
         });
         add(useInfoButton);
@@ -65,8 +67,33 @@ public class Eingabefenster extends JPanel {
         add(artistField);
 
     }
-
+//Llanowarelfen	Llanowar Elves	Elfes de Llanowar	Llanowar Elves			Siebte	C	253	Jerry Tiritilli
     private void parseDeckviewerInfosToTextFields(String text) {
+        //StringTokenizer tokenizer = new StringTokenizer(text, ",");
+        StringTokenizer tokenizer = new StringTokenizer(text, "\t");
+        nameDEField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameENField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameFRField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameITField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameSPField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) namePOField.setText(tokenizer.nextToken());
+
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) rarityChoice.select( choiceTranslator(tokenizer.nextToken()));
+        if(tokenizer.hasMoreTokens()) cardNumberField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) artistField.setText(tokenizer.nextToken());
+
+    }
+
+    private int choiceTranslator(String s) {
+        s.trim();
+        switch (s.toUpperCase()){
+            case "C" : return 0;
+            case "U" : return 1;
+            case "R" : return 2;
+            case "M" : return 3;
+            default : return 0;
+        }
     }
 
 
