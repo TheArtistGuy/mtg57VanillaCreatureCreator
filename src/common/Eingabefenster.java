@@ -20,10 +20,10 @@ public class Eingabefenster extends JPanel {
     private JTextField manaField;
     private JTextField nameDEField;
     private Model model;
-    private InputParser parser;
     private JTextField artistField;
 
-    public Eingabefenster(InputParser parser){
+    public Eingabefenster(Model model){
+        this.model = model;
         JLabel inputLabel = new JLabel("Informationen aus dem DeckViewer");
         this.add(inputLabel);
         JTextField inputField = new JTextField(40);
@@ -33,7 +33,7 @@ public class Eingabefenster extends JPanel {
         useInfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parser.parseDeckviewerInfosToModel(inputField.getText());
+                parseDeckviewerInfosToTextFields(inputField.getText());
                 updateFieldsFromModel();
             }
         });
@@ -65,6 +65,10 @@ public class Eingabefenster extends JPanel {
         add(artistField);
 
     }
+
+    private void parseDeckviewerInfosToTextFields(String text) {
+    }
+
 
     private void initialiseAndAddCreatureInfos() {
         JLabel manaLabel = new JLabel("Manakosten:");
@@ -127,7 +131,7 @@ public class Eingabefenster extends JPanel {
         add(namePanel);
     }
 
-    private void updateFieldsFromModel() {
+    public void updateFieldsFromModel() {
         editionChoice.select(model.edition.ordinal());
         rarityChoice.select(model.rarity.ordinal());
         cardNumberField.setText(model.cardnumber);
@@ -144,10 +148,27 @@ public class Eingabefenster extends JPanel {
         artistField.setText(model.artist);
     }
 
-    private void flushTextLabelsToModel(String text) {
+    public void flushTextLabelsToModel() {
+        System.out.println(editionChoice.getEditionName().getName());
+        System.out.println(rarityChoice.getRarity().getText());
+        System.out.println(cardNumberField.getText());
+        System.out.println(faeigTxtField.getText());
+        System.out.println(statsField.getText());
+        System.out.println(namePOField.getText());
+        System.out.println(nameSPField.getText());
+        System.out.println(nameITField.getText());
+        System.out.println(nameFRField.getText());
+        System.out.println(nameENField.getText());
+        System.out.println(nameDEField.getText());
+        System.out.println(creatureInfoField.getText());
+        System.out.println(manaField.getText());
+        System.out.println(artistField.getText());
+        System.out.println();
+
+
         model.edition = editionChoice.getEditionName();
         model.rarity = rarityChoice.getRarity();
-        model.cardnumber =cardNumberField.getText();
+        model.cardnumber = cardNumberField.getText();
         model.ability = faeigTxtField.getText();
         model.stats = statsField.getText();
         model.namePO = namePOField.getText();
