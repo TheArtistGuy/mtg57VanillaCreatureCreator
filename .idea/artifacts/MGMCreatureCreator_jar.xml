@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MGMCreatureCreator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MGMCreatureCreator_jar</output-path>
+    <root id="archive" name="MGMCreatureCreator.jar">
+      <element id="module-output" name="MGMCreatureCreator" />
+    </root>
+  </artifact>
+</component>
