@@ -1,5 +1,8 @@
 package common;
 
+/**
+ * Enum um Editionen von Mtg anzugeben.
+ */
 public enum Editionen {
     RETURNTORAVNICA ("RueckkehrNachRavnica");
 
@@ -9,7 +12,11 @@ public enum Editionen {
         this.name = name;
     }
 
-    public String getName() {
+    /**
+     * Der Name der Edition in formatierter Form um dem Enum in mtg57c zu entsprechen
+     * @return der Name
+     */
+    public String getNameInEEditionClassFormat() {
         return name;
     }
 }

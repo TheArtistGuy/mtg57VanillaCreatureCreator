@@ -1,5 +1,7 @@
 package common;
 
+import dialogs.ActiveAbilityDialog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,8 +27,12 @@ public class Eingabefenster extends JPanel {
     private JCheckBox aktCheckBox;
     private JTextField aktManaField;
 
-
-    public Eingabefenster(Model model){
+    /**
+     * Konstruktor
+     * @param model das Model
+     * @param owner Frame zu dem eventuelle Dialogfenster ausgerichtet werden sollen.
+     */
+    public Eingabefenster(Model model, JFrame owner){
         this.model = model;
         JLabel inputLabel1 = new JLabel("Informationen aus dem Deckeditor, um automatisch in Felder zu schreiben ");
         JLabel inputLabel2 = new JLabel("Fehler, wenn nicht alle Sprachen gesetzt sind.");
@@ -45,12 +51,13 @@ public class Eingabefenster extends JPanel {
             }
         });
         add(useInfoButton);
-
         initialiseAndAddNameFields();
-
-
         initialiseAndAddCreatureInfos();
+        initialiseAndAddCreatureInfoFields();
+        initialiseAndAddActiveAbilitiesButton(model, owner);
+    }
 
+    private void initialiseAndAddCreatureInfoFields() {
         JLabel editionLabel = new JLabel("Edition:");
         editionChoice = new EditionChoice();
         add(editionLabel);
@@ -70,16 +77,18 @@ public class Eingabefenster extends JPanel {
         this.artistField = new JTextField(10);
         add(artistLabel);
         add(artistField);
+    }
 
-        JLabel aktLabel = new JLabel("Hat aktivierte Fähigkeit");
-        this.aktCheckBox = new JCheckBox();
-        add(aktLabel);
-        add(aktCheckBox);
-
-        JLabel aktManaLabel = new JLabel("Manakosten der aktivierten Fähigkeit");
-        this.aktManaField = new JTextField(5);
-        add(aktManaLabel);
-        this.add(aktManaField);
+    private void initialiseAndAddActiveAbilitiesButton(Model model, JFrame owner) {
+        JButton addActiveAbilityButton = new JButton("Füge Aktive Fähigkeit hinzu");
+        addActiveAbilityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ActiveAbilityDialog aktiveAbilityDialog = new ActiveAbilityDialog(owner, model);
+                aktiveAbilityDialog.setRuletext(faeigTxtField.getText());
+            }
+        });
+        add(addActiveAbilityButton);
     }
 
     private void parseDeckviewerInfosToTextFields(String text) {
@@ -172,6 +181,9 @@ public class Eingabefenster extends JPanel {
         add(namePanel);
     }
 
+    /**
+     * setzt die Text-Felder auf die im Model gespeicherten Informationen
+     */
     public void updateFieldsFromModel() {
         editionChoice.select(model.edition.ordinal());
         rarityChoice.select(model.rarity.ordinal());
@@ -189,24 +201,10 @@ public class Eingabefenster extends JPanel {
         artistField.setText(model.artist);
     }
 
+    /**
+     * setzt die Informationen des Models auf die Informationen der Felder
+     */
     public void flushTextLabelsToModel() {
-        System.out.println(editionChoice.getEditionName().getName());
-        System.out.println(rarityChoice.getRarity().getText());
-        System.out.println(cardNumberField.getText());
-        System.out.println(faeigTxtField.getText());
-        System.out.println(statsField.getText());
-        System.out.println(namePOField.getText());
-        System.out.println(nameSPField.getText());
-        System.out.println(nameITField.getText());
-        System.out.println(nameFRField.getText());
-        System.out.println(nameENField.getText());
-        System.out.println(nameDEField.getText());
-        System.out.println(creatureInfoField.getText());
-        System.out.println(manaField.getText());
-        System.out.println(artistField.getText());
-        System.out.println();
-
-
         model.edition = editionChoice.getEditionName();
         model.rarity = rarityChoice.getRarity();
         model.cardnumber = cardNumberField.getText();
@@ -221,7 +219,5 @@ public class Eingabefenster extends JPanel {
         model.mana = manaField.getText();
         model.nameDE = nameDEField.getText();
         model.artist = artistField.getText();
-        model.hasAktivAbility = aktCheckBox.isSelected();
-        model.abilityManaCost = aktManaField.getText();
     }
 }
