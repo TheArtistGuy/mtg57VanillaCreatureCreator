@@ -35,10 +35,13 @@ public class TextAreaPanel extends JScrollPane {
         StringBuilder sb = new StringBuilder();
         String classname = createClassNameFromName(model.nameDE);
         List<String> abilityNameList = new ArrayList<>();
-        sb.append("\t#region " + classname + " - " + model.cardnumber + "\n\n");
+        sb.append("\t#region " + classname + " - " + model.cardnumber.trim() + "\n\n");
         if (model.hasAktivAbility()) {
             for (int i = 0; i < model.activeAbilitys.size();i++) {
-                abilityNameList.add("aktFaehig" + classname + (i+1));
+                abilityNameList.add("aktFaehig" + classname);
+                if (i> 0 ){
+                    sb.append((i+1));
+                }
                 sb.append("\n\tclass " + abilityNameList.get(i) + " : TAktivierteFaehigkeit\n" +
                         "\t{\n" +
                         "\t\tpublic " + abilityNameList.get(i) + "(TMagicCard genitor, GameManager.GameManager manager) :\n" +
@@ -49,7 +52,7 @@ public class TextAreaPanel extends JScrollPane {
                         "\t\t{\n" +
                         "\t\t\tRule.setRegelText(\"" + model.nameEN + "\",\n" +
                         "\t\t\t\t  \"" + model.activeAbilitys.get(i).getAbilityRuleText() + "\");\n" +
-                        "\t\t}\n"
+                        "\t\t}\n\n"
                 );
                 if (model.activeAbilitys.get(i).getAbilityManaCost() != "") {
                     sb.append(
@@ -112,7 +115,7 @@ public class TextAreaPanel extends JScrollPane {
         }
         sb.append(
                 "\t}\n" +
-                "\t#endregion // " + classname + "\n" +
+                "\t#endregion // " + classname + " - " + model.cardnumber.trim() +"\n" +
                 "\n");
         System.out.println(sb.toString());
         return sb.toString();

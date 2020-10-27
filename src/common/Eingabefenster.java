@@ -24,8 +24,7 @@ public class Eingabefenster extends JPanel {
     private JTextField nameDEField;
     private Model model;
     private JTextField artistField;
-    private JCheckBox aktCheckBox;
-    private JTextField aktManaField;
+
 
     /**
      * Konstruktor

@@ -30,6 +30,7 @@ public class MainFrame extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private JToolBar inintialiseToolbar(Model model) {
