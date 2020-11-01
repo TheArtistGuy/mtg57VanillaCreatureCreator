@@ -46,7 +46,7 @@ public class Eingabefenster extends JPanel {
         useInfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parseDeckviewerInfosToTextFields(inputField.getText());
+                parseDeckviewerInfosToTextFieldsExtended(inputField.getText());
             }
         });
         add(useInfoButton);
@@ -101,10 +101,87 @@ public class Eingabefenster extends JPanel {
         if(tokenizer.hasMoreTokens()) namePOField.setText(tokenizer.nextToken());
 
         if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
-        if(tokenizer.hasMoreTokens()) rarityChoice.select( choiceTranslator(tokenizer.nextToken()));
+        if(tokenizer.hasMoreTokens()) rarityChoice.select(choiceTranslator(tokenizer.nextToken()));
         if(tokenizer.hasMoreTokens()) cardNumberField.setText(tokenizer.nextToken());
         if(tokenizer.hasMoreTokens()) artistField.setText(tokenizer.nextToken());
 
+    }
+
+
+    private void parseDeckviewerInfosToTextFieldsExtended(String text) {
+        //StringTokenizer tokenizer = new StringTokenizer(text, ",");
+        StringTokenizer tokenizer = new StringTokenizer(text, "\t");
+        if(tokenizer.hasMoreTokens()) nameDEField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameENField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameFRField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameITField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) nameSPField.setText(tokenizer.nextToken());
+        if(tokenizer.hasMoreTokens()) namePOField.setText(tokenizer.nextToken());
+
+        if(tokenizer.hasMoreTokens()) editionChoice.select(editionChoiceTranslator(tokenizer.nextToken()));
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+
+        StringBuilder statsBuilder = new StringBuilder();
+        if(tokenizer.hasMoreTokens()) statsBuilder.append(tokenizer.nextToken().trim());
+        statsBuilder.append("/");
+        if(tokenizer.hasMoreTokens()) statsBuilder.append(tokenizer.nextToken().trim());
+        statsField.setText(statsBuilder.toString());
+        if(tokenizer.hasMoreTokens()) manaField.setText(tokenizer.nextToken());
+
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+
+        if(tokenizer.hasMoreTokens()) rarityChoice.select(choiceTranslator(tokenizer.nextToken()));
+        if(tokenizer.hasMoreTokens()) cardNumberField.setText(tokenizer.nextToken());
+
+        if(tokenizer.hasMoreTokens()) faeigTxtField.setText(tokenizer.nextToken());
+
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+
+
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) creatureInfoField.setText(removeInvalidStringFromCreatureInfoToken(tokenizer.nextToken()));
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+        if(tokenizer.hasMoreTokens()) tokenizer.nextToken();
+
+        if(tokenizer.hasMoreTokens()) artistField.setText(tokenizer.nextToken());
+
+    }
+
+    private String removeInvalidStringFromCreatureInfoToken(String s){
+        StringBuilder stringbuilder = new StringBuilder();
+        for (int i = 0; i < s.length(); i++){
+            if (i == 9) {
+                stringbuilder.append('-');
+            }else{
+                stringbuilder.append(s.charAt(i));
+            }
+        }
+        return stringbuilder.toString();
+    }
+
+    private String editionChoiceTranslator(String nextToken) {
+        switch (nextToken) {
+            case "Rückkehr nach Ravnica":
+                return "Return to Ravnica";
+            default:
+                return "Return to Ravnica";
+        }
     }
 
     private int choiceTranslator(String s) {

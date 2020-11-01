@@ -87,7 +87,7 @@ public class TextAreaPanel extends JScrollPane {
                 "\t\t{\n" +
                 "\t\tRule.setRegelText(\"" + model.nameEN + "\",\n" +
                 "\t\t\t\"" + model.mana.trim() + "\",\n" +
-                "\t\t\t\"Creature - " + model.cretureTypes + "\",\n" +
+                "\t\t\t\"" + model.cretureTypes + "\",\n" +
                 "\t\t\t\"" + model.ability + "\",\n" +
                 "\t\t\t\"" + model.stats + "\");\n" +
                 "\t\t}\n\n");
